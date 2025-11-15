@@ -5,7 +5,7 @@ namespace fs = std::filesystem;
 
 Texture::Texture(const std::string& filename)
 {
-    fs::path path = fs::absolute(fs::current_path() / "res/textures" / filename);
+    fs::path path = fs::absolute(fs::current_path() / "res" / filename);
 
     int maxTextureSize;
     glGetIntegerv(GL_MAX_TEXTURE_SIZE, &maxTextureSize);

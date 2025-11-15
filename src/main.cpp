@@ -1,8 +1,10 @@
-#include "visual.hpp"
+#include "game.hpp"
+#define STB_IMAGE_IMPLEMENTATION
+#include <stb_image.h>
 
 int main()
 {
-    Visual v("game", 800, 600);
-    v.run();
+    Game game(800, 600, "game");
+    game.run();
     return 0;
 }
