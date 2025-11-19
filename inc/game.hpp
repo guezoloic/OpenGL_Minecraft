@@ -17,7 +17,13 @@ private:
 public:
   Game(int width, int height, string name);
   ~Game();
-  void run();
+
+  void run(bool (*func)(Game *g));
+
+  GLFWwindow *getWindow();
+  const char *getName();
+  int getWidth();
+  int getHeight();
 };
 
 #endif
