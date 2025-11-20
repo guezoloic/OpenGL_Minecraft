@@ -6,7 +6,7 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
-class Shaders
+class Shader
 {
 private:
     GLuint vertexShader;
@@ -18,8 +18,8 @@ private:
     void compileInProgram();
 
 public:
-    Shaders(const char* vertexShaderSource, const char* fragmentShaderSource);             
-    ~Shaders();
+    Shader(const char* vertexShaderSource, const char* fragmentShaderSource);             
+    ~Shader();
     
     GLuint getProgram() const;
     void use() const;

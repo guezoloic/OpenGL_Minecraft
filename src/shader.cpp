@@ -1,6 +1,6 @@
 #include "shader.hpp"
 
-Shaders::Shaders(const char* vertexShaderSource, const char* fragmentShaderSource)
+Shader::Shader(const char* vertexShaderSource, const char* fragmentShaderSource)
 {
     vertexShader = glCreateShader(GL_VERTEX_SHADER);     
     fragmentShader = glCreateShader(GL_FRAGMENT_SHADER); 
@@ -12,19 +12,19 @@ Shaders::Shaders(const char* vertexShaderSource, const char* fragmentShaderSourc
     compileInProgram();
 }
 
-void Shaders::addVertShader(const char* vertexShaderSource)
+void Shader::addVertShader(const char* vertexShaderSource)
 {
     glShaderSource(vertexShader, 1, &vertexShaderSource, nullptr);
     glCompileShader(vertexShader);
 }
 
-void Shaders::addFragShader(const char* fragmentShaderSource)
+void Shader::addFragShader(const char* fragmentShaderSource)
 {
     glShaderSource(fragmentShader, 1, &fragmentShaderSource, nullptr);
     glCompileShader(fragmentShader);
 }
 
-void Shaders::compileInProgram()
+void Shader::compileInProgram()
 {
     glAttachShader(shaderProgram, vertexShader);
     glAttachShader(shaderProgram, fragmentShader);
@@ -36,17 +36,17 @@ void Shaders::compileInProgram()
     glDeleteShader(fragmentShader);
 }
 
-Shaders::~Shaders()
+Shader::~Shader()
 {
     glDeleteProgram(shaderProgram);
 }
 
-void Shaders::use() const
+void Shader::use() const
 {
     glUseProgram(shaderProgram);
 }
 
-GLuint Shaders::getProgram() const
+GLuint Shader::getProgram() const
 {
     return shaderProgram;
 }
