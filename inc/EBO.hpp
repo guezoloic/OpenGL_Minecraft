@@ -9,7 +9,7 @@ private:
     GLuint id;
 
 public:
-    EBO(const unsigned int* indices, size_t size);
+    EBO(unsigned int* indices, size_t size);
     ~EBO();
 
     void bind();
