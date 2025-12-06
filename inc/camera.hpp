@@ -1,44 +1,46 @@
 #ifndef CAMERA_HPP
 #define CAMERA_HPP
 
-#include <glfw/glfw3.h>
-#include <glm/glm.hpp>
-#include <glm/gtc/matrix_transform.hpp>
+#include "glm/glm.hpp"
+#include "glm/gtc/matrix_transform.hpp"
 
-class Camera {
-private:
-    int screenWidth;
-    int screenHeight;
+struct GLFWwindow;
 
-    double mousePosX;
-    double mousePosY;
-    bool firstMouse = true;
+class Camera
+{
+ private:
+  int screenWidth;
+  int screenHeight;
 
-    float cameraYaw;
-    float cameraPitch;
+  double mousePosX;
+  double mousePosY;
+  bool firstMouse = true;
 
-    glm::vec3 cameraFront;
-    glm::vec3 cameraUp;
-    glm::vec3 cameraRight;
-    glm::vec3 worldUp;
+  float cameraYaw;
+  float cameraPitch;
 
-    GLFWwindow* window;
+  glm::vec3 cameraFront;
+  glm::vec3 cameraUp;
+  glm::vec3 cameraRight;
+  glm::vec3 worldUp;
 
-    void processInput(float deltaTime);
-    void processMouseMovement();
-    void updateCameraVectors();
+  GLFWwindow* window;
 
-public:
-    Camera(int width, int height, GLFWwindow* window, float sensitivity);
+  void processInput(float deltaTime);
+  void processMouseMovement();
+  void updateCameraVectors();
 
-    void update(float deltaTime);
-    glm::mat4 getViewMatrix();
+ public:
+  Camera(int width, int height, GLFWwindow* window, float sensitivity);
 
-    float speed;
-    float cameraSensitivity;
-    float fov;
+  void update(float deltaTime);
+  glm::mat4 getViewMatrix();
 
-    glm::vec3 cameraPosition;
+  float speed;
+  float cameraSensitivity;
+  float fov;
+
+  glm::vec3 cameraPosition;
 };
 
 #endif

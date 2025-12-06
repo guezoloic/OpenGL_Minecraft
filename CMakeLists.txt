@@ -6,6 +6,8 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 file(GLOB_RECURSE CPP_SOURCES CONFIGURE_DEPENDS src/*.cpp)
 file(GLOB_RECURSE CPP_HEADERS CONFIGURE_DEPENDS src/*.hpp)
+
+list(APPEND CPP_SOURCES lib/glad/src/glad.c)
 add_executable(main ${CPP_SOURCES} ${CPP_HEADERS})
 
 # GLFW
@@ -14,12 +16,8 @@ set(GLFW_BUILD_TESTS OFF CACHE BOOL "" FORCE)
 set(GLFW_BUILD_DOCS OFF CACHE BOOL "" FORCE)
 add_subdirectory(lib/glfw)
 
-# GLEW
-add_definitions(-DGLEW_STATIC)
-include_directories(lib/glew/include)
-add_library(glew STATIC lib/glew/src/glew.c)
-target_include_directories(glew PUBLIC lib/glew/include)
-target_compile_definitions(glew PRIVATE GLEW_STATIC)
+# GLAD
+target_include_directories(main PRIVATE lib/glad/include)
 
 # GLM
 target_include_directories(main PRIVATE lib/glm)
@@ -29,7 +27,7 @@ target_include_directories(main PRIVATE lib/stb)
 
 target_include_directories(main PRIVATE inc/)
 
-target_link_libraries(main PRIVATE glfw glew)
+target_link_libraries(main PRIVATE glfw)
 
 find_package(OpenGL REQUIRED)
 target_link_libraries(main PRIVATE OpenGL::GL)

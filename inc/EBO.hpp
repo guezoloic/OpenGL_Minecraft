@@ -1,18 +1,21 @@
 #ifndef EBO_HPP
 #define EBO_HPP
 
-#include <GL/glew.h>
+#include <stddef.h>
+
+#include "glad/glad.h"
+
 
 class EBO
 {
-private:
-    GLuint id;
+ private:
+  GLuint id;
 
-public:
-    EBO(unsigned int* indices, size_t size);
-    ~EBO();
+ public:
+  EBO(unsigned int* indices, size_t size);
+  ~EBO();
 
-    void bind();
-    void unbind();
+  void bind();
+  void unbind();
 };
 #endif

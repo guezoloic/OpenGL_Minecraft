@@ -1,7 +1,7 @@
 #ifndef TEXTUTE_HPP
 #define TEXTUTE_HPP
 
-#include <GL/glew.h>
+#include "glad/glad.h"
 #include <string>
 
 class Texture

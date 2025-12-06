@@ -1,5 +1,7 @@
 #include "cube.hpp"
-#include "VAO.hpp"
+
+#include "glm/gtc/type_ptr.hpp"
+#include "vao.hpp"
 #include "vbo.hpp"
 
 GLfloat cubeVertices[] = {
@@ -124,21 +126,21 @@ const char* cubeFragShader = R"(
     }
 )";
 
-Cube::Cube(Camera &camera) :
-  vbo(cubeVertices, sizeof(cubeVertices)),
-  ebo(cubeIndices, sizeof(cubeIndices)),
-  texture("stone.png"),
-  camera(camera),
-  shader(cubeVertexShader, cubeFragShader)
+Cube::Cube(Camera& camera)
+    : vbo(cubeVertices, sizeof(cubeVertices)),
+      ebo(cubeIndices, sizeof(cubeIndices)),
+      texture("stone.png"),
+      camera(camera),
+      shader(cubeVertexShader, cubeFragShader)
 {
   vao.bind();
   vbo.bind();
 
-  GLsizei stride = 8*sizeof(float);
+  GLsizei stride = 8 * sizeof(float);
 
   vao.setAttributePointer(0, 3, GL_FLOAT, stride, (void*)0);
-  vao.setAttributePointer(1, 3, GL_FLOAT, stride, (void*)(3*sizeof(float)));
-  vao.setAttributePointer(2, 2, GL_FLOAT, stride, (void*)(6*sizeof(float)));
+  vao.setAttributePointer(1, 3, GL_FLOAT, stride, (void*)(3 * sizeof(float)));
+  vao.setAttributePointer(2, 2, GL_FLOAT, stride, (void*)(6 * sizeof(float)));
 
   ebo.bind();
 }
@@ -148,13 +150,10 @@ void Cube::loop(int width, int height)
   shader.use();
   glActiveTexture(GL_TEXTURE0);
 
-  glm::vec3 coordinate = glm::vec3(0.0f, -1.0f, 0.0f);
+  glm::vec3 coordinate = glm::vec3(0.0f, 0.0f, -1.0f);
   glm::mat4 projection = glm::perspective(
-    glm::radians(camera.fov), 
-    static_cast<float>(width) / static_cast<float>(height), 
-    0.1f, 
-    100.0f
-  );
+      glm::radians(camera.fov),
+      static_cast<float>(width) / static_cast<float>(height), 0.1f, 100.0f);
 
   GLint texLoc = glGetUniformLocation(shader.getProgram(), "material.diffuse");
   glUniform1i(texLoc, 0);
@@ -163,16 +162,13 @@ void Cube::loop(int width, int height)
   glUniformMatrix4fv(projectionLoc, 1, GL_FALSE, glm::value_ptr(projection));
 
   GLint viewLoc = glGetUniformLocation(shader.getProgram(), "view");
-  glUniformMatrix4fv(viewLoc, 1, GL_FALSE, glm::value_ptr(camera.getViewMatrix()));
+  glUniformMatrix4fv(viewLoc, 1, GL_FALSE,
+                     glm::value_ptr(camera.getViewMatrix()));
 
   glm::mat4 model = glm::translate(glm::mat4(1.0f), coordinate);
   GLint modelLoc = glGetUniformLocation(shader.getProgram(), "model");
   glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 
-  vao.drawElement(
-    GL_TRIANGLES, 
-    sizeof(cubeIndices) / sizeof(unsigned int), 
-    GL_UNSIGNED_INT, 
-    0
-  );
+  vao.drawElement(GL_TRIANGLES, sizeof(cubeIndices) / sizeof(unsigned int),
+                  GL_UNSIGNED_INT, 0);
 }

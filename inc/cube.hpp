@@ -1,16 +1,18 @@
 #ifndef CUBE_HPP
 #define CUBE_HPP
 
-#include "vbo.hpp"
+#include <stddef.h>
+
+#include "camera.hpp"
 #include "ebo.hpp"
-#include "vao.hpp"
 #include "shader.hpp"
 #include "texture.hpp"
-#include "camera.hpp"
+#include "vao.hpp"
+#include "vbo.hpp"
 
 class Cube
 {
-private:
+ private:
   VBO vbo;
   EBO ebo;
   VAO vao;
@@ -19,7 +21,7 @@ private:
   Shader shader;
   Texture texture;
 
-public:
+ public:
   Cube(Camera &camera);
   void loop(int width, int height);
 };
