@@ -5,7 +5,7 @@ from pathlib import Path
 
 line: int = 12
 
-def write_binary(content: str) -> str:
+def write_binary(content: bytes) -> str:
     text = ""
     for i, byte in enumerate(content):
         if i % line == 0:
@@ -37,8 +37,8 @@ def main() -> int:
     content = src.read_bytes()
 
     with open(dst, "w") as f:
-        f.write(f"unsigned char {varname}[] = {{\n{write_binary(content)}}};\n")
-        f.write(f"unsigned int {varname}_LEN = {len(content)};\n")
+        f.write(f"const unsigned char {varname}[] = {{\n{write_binary(content)}}};\n")
+        f.write(f"const unsigned int {varname}_LEN = {len(content)};\n")
     return 0
 
 
