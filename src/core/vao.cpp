@@ -1,27 +1,30 @@
-#include "vao.hpp"
+#include "core/vao.hpp"
 
-VAO::VAO() { glGenVertexArrays(1, &id); }
+core::VAO::VAO() { glGenVertexArrays(1, &id); }
 
-VAO::~VAO() { glDeleteVertexArrays(1, &id); }
+core::VAO::~VAO() { glDeleteVertexArrays(1, &id); }
 
-void VAO::bind() { glBindVertexArray(id); }
+void core::VAO::bind() { glBindVertexArray(id); }
 
-void VAO::unbind() { glBindVertexArray(0); }
+void core::VAO::unbind() { glBindVertexArray(0); }
 
-void VAO::setAttributePointer(GLuint index, GLuint size, GLenum type,
-                              GLsizei stride, const void* offset)
+void core::VAO::setAttributePointer(GLuint index, GLuint size, GLenum type,
+                                    GLsizei stride, const void *offset)
 {
+  // Enable the attribute at the given index
   glEnableVertexAttribArray(index);
+
+  // Define the layout of the vertex attribute
   glVertexAttribPointer(index, size, type, GL_FALSE, stride, offset);
 }
 
-void VAO::drawElement(GLenum mode, GLsizei count, GLenum type,
-                      const void* indices)
+void core::VAO::drawElement(GLenum mode, GLsizei count, GLenum type,
+                            const void *indices)
 {
   glDrawElements(mode, count, type, indices);
 }
 
-void VAO::drawArray(GLenum mode, GLint first, GLsizei count)
+void core::VAO::drawArray(GLenum mode, GLint first, GLsizei count)
 {
   glDrawArrays(mode, first, count);
 }
