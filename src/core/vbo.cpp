@@ -1,16 +1,32 @@
-#include "vbo.hpp"
+#include "core/vbo.hpp"
 
-VBO::VBO() : id(0) {}
+#include <cstddef>
 
-void VBO::setData(const GLfloat* vertices, size_t size)
+VBO::VBO(const void *data, std::size_t size)
 {
-  if (this->id == 0) glGenBuffers(1, &this->id);
-  glBindBuffer(GL_ARRAY_BUFFER, this->id);
-  glBufferData(GL_ARRAY_BUFFER, size, vertices, GL_STATIC_DRAW);
+  // Generate a unique OpenGL buffer handle (ID).
+  glGenBuffers(1, &id);
+  // Binding the VBO is mandatory before allocating GPU memory
+  bind();
+  // Allocate GPU memory and upload data.
+  glBufferData(GL_ARRAY_BUFFER, size, data, GL_STATIC_DRAW);
 }
 
-VBO::~VBO() { glDeleteBuffers(1, &this->id); }
+VBO::~VBO()
+{
+  // delete the OpenGL buffer handle
+  glDeleteBuffers(1, &this->id);
+}
 
-void VBO::bind() { glBindBuffer(GL_ARRAY_BUFFER, this->id); }
+void VBO::bind()
+{
+  // Bind this buffer to the GL_ARRAY_BUFFER target.
+  // GL_ARRAY_BUFFER tells opengl this buffer contains vertices
+  glBindBuffer(GL_ARRAY_BUFFER, this->id);
+}
 
-void VBO::unbind() { glBindBuffer(GL_ARRAY_BUFFER, 0); }
+void VBO::unbind() 
+{ 
+  // bind the buffer to NULL handle (remove old id)
+  glBindBuffer(GL_ARRAY_BUFFER, 0); 
+}
